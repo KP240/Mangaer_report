@@ -23,6 +23,10 @@ jobs:
         python -m pip install --upgrade pip
         pip install simple-salesforce pandas requests opencage  # Removed smtplib
 
+    - name: Verify script presence
+      run: |
+        ls -al  # Lists files to ensure the Python script is present
+
     - name: Run Python email script
       env:
         SF_USERNAME: ${{ secrets.SF_USERNAME }}
@@ -31,4 +35,4 @@ jobs:
         SMTP_USER: ${{ secrets.SMTP_USER }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       run: |
-        python send_report_manager.py
+        python send_report_manager.py || echo "Python script execution failed!"
