@@ -27,6 +27,11 @@ jobs:
       run: |
         ls -al  # Lists files to ensure the Python script is present
 
+    - name: Debug Environment Variables
+      run: |
+        echo "SF_USERNAME is set: ${{ secrets.SF_USERNAME }}"
+        echo "SF_SECURITY_TOKEN is set: ${{ secrets.SF_SECURITY_TOKEN }}"
+
     - name: Run Python email script
       env:
         SF_USERNAME: ${{ secrets.SF_USERNAME }}
@@ -35,4 +40,4 @@ jobs:
         SMTP_USER: ${{ secrets.SMTP_USER }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       run: |
-        python send_report_manager.py || echo "Python script execution failed!"
+        python send_report_manager.py || echo "Python script execution failed due to invalid Salesforce credentials or SMTP issues."
